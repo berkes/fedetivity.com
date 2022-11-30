@@ -1,0 +1,22 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: deploy-web
+    image: drillster/drone-rsync
+    settings:
+      hosts:
+        from_secret: DEPLOY_HOSTS
+      user:
+        from_secret: DEPLOY_USER
+      key:
+        from_secret: DEPLOY_KEY
+      source: ./
+      target: /u/apps/fedetivity/current/public/
+    when:
+      branch:
+        - main
+      repo:
+        - berkes/fedetivity.com
